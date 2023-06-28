@@ -6,11 +6,11 @@ values ('прохорова', 'инна', 'андреевна', 25, 'vil53', 'а
        ('алексеев', 'аркадий', 'иванович', 27, 'akov.efremov', 'активный', '$2a$12$37aLWLHgzu1dt2Pa.Z8zLO4MrKpig4kMRrXlJyrI5pVydqMZTbiaG'),
        ('иванов', 'иван', 'иванович', 40, 'ivanov.ivan', 'удаленный', '$2a$12$9.0ouDrO6AdbVHF7NYZS0.1Kf/J34OMOSOAW71Iqc9FwC5MiavDx6');
 
-insert into contracts (company_name, admin_id, status)
-values ('им иванов и ко', 1, 'не подписан'),
-       ('ооо кококола', 2, 'подписан'),
-       ('ермаков н.м.', 3, 'подписан'),
-       ('мкоусош №2', 4, 'подписан');
+insert into contracts (company_name, event_name, admin_id, status)
+values ('им иванов и ко', 'день рождения', 1, 'подписан'),
+       ('ооо кококола', 'корпоратив', 2, 'подписан'),
+       ('ермаков н.м.', 'свадьба', 3, 'подписан'),
+       ('мкоусош №2', 'выпускной', 4, 'подписан');
 
 insert into events (contract_id, name, cost, status)
 values (1, 'день рождения', 5000, 'не проведен'),

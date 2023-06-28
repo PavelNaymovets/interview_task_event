@@ -37,7 +37,7 @@ create table contracts
     admin_id     bigint    not null references users (id),
     status       text      not null,
     created_at   timestamp default current_timestamp,
-    updated_at   timestamp default current_timestamp
+    updated_at   timestamp default current_timestamp,
     unique (company_name, admin_id)
 );
 
@@ -49,7 +49,7 @@ create table events
     cost        bigint    not null,
     status      text      not null,
     created_at  timestamp default current_timestamp,
-    updated_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
 );
 
 create table event_members

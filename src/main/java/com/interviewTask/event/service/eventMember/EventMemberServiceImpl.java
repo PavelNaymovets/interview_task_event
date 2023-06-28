@@ -16,8 +16,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.Locale;
 
-import static com.interviewTask.event.model.eventMember.EventMemberStatus.MEMBER;
-import static com.interviewTask.event.model.eventMember.EventMemberStatus.POSITIVE;
+import static com.interviewTask.event.model.eventMember.EventMemberStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,19 +29,19 @@ public class EventMemberServiceImpl implements EventMemberService {
     @Override
     public EventMemberDto signUp(EventMemberDto eventMemberDto) {
         validate(eventMemberDto);
-
-        if (eventMemberDto.getPcrTest().equalsIgnoreCase(POSITIVE.getStatus())) {
-            throw new ValidationException(
-                    messageSource.getMessage("pcr.test.positive", null, Locale.ENGLISH));
-        }
-
         String login = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User member = userRepository.findByLogin(login)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         messageSource.getMessage("user.not.found.by.login", null, Locale.ENGLISH) + login));
         EventMember eventMember = eventMemberConverter.convertToEntity(eventMemberDto);
         eventMember.setUser(member);
-        eventMember.setStatus(MEMBER.getStatus());
+
+        if (eventMemberDto.getPcrTest().equalsIgnoreCase(POSITIVE.getStatus())) {
+            eventMember.setStatus(NOT_MEMBER.getStatus());
+        } else {
+            eventMember.setStatus(MEMBER.getStatus());
+        }
+
         EventMember memberCreated = eventMemberRepository.save(eventMember);
 
         return eventMemberConverter.convertToDto(memberCreated);

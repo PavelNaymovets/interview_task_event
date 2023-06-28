@@ -50,16 +50,17 @@ public class EventServiceImpl implements EventService {
 
         if (!admin.getLogin().equalsIgnoreCase(login)) {
             throw new ValidationException(
-                    messageSource.getMessage("contract.not.equals.login", null, Locale.ENGLISH) + contractId);
+                    messageSource.getMessage("contract.not.equals.login", null, Locale.ENGLISH));
         }
 
         if (contract.getStatus().equalsIgnoreCase(UNSIGNED.getStatus())) {
             throw new ValidationException(
-                    messageSource.getMessage("contract.is.unsigned", null, Locale.ENGLISH) + contractId);
+                    messageSource.getMessage("contract.is.unsigned", null, Locale.ENGLISH));
         }
 
         Event event = eventConverter.convertToEntity(eventDto);
         event.setStatus(EventStatus.AWAITS.getStatus());
+        event.setName(contract.getEventName());
         Event eventCreated = eventRepository.save(event);
         serviceLog.info(
                 messageSource.getMessage("event.created", null, Locale.ENGLISH) + event.getId());
@@ -83,7 +84,7 @@ public class EventServiceImpl implements EventService {
                     messageSource.getMessage("eventDto.field.status.autofill", null, Locale.ENGLISH));
         }
 
-        if (ObjectUtils.isEmpty(eventDto.getName()) || eventDto.getName().isBlank()) {
+        if (!ObjectUtils.isEmpty(eventDto.getName())) {
             throw new ValidationException(
                     messageSource.getMessage("eventDto.field.name.not.filled", null, Locale.ENGLISH));
         }

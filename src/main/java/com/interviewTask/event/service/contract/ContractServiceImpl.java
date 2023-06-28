@@ -54,7 +54,7 @@ public class ContractServiceImpl implements ContractService {
                         messageSource.getMessage("contract.not.found.by.id", null, Locale.ENGLISH) + id));
         if (contractUnsigned.getStatus().equalsIgnoreCase(SIGNED.getStatus())) {
             throw new ValidationException(
-                    messageSource.getMessage("contract.already.assigned", null, Locale.ENGLISH) + id);
+                    messageSource.getMessage("contract.already.assigned", null, Locale.ENGLISH));
         }
 
         contractUnsigned.setStatus(SIGNED.getStatus());

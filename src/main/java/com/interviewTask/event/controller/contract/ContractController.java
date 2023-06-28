@@ -19,7 +19,7 @@ public class ContractController {
     }
 
     @IsManager
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     ContractDto signOn(@PathVariable Long code) {
         return contractService.signOn(code);
     }
