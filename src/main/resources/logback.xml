@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Дефолтный логер для org.springframework и org.hibernate -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!-- Исключить стартовые инфо логи Logback -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <property name="LOGS_HOME" value="logs/"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!-- Запись логов в консоль -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                ${LOG_PATTERN}
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- Запись логов в файл -->
+    <appender name="AUTH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_HOME}auth/auth_log.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                ${LOG_PATTERN}
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_HOME}auth/auth_log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_HOME}service/service_log.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                ${LOG_PATTERN}
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_HOME}service/service_log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Регистрация логера. Назначение имени, уровня и способа записи логов -->
+    <logger name="auth-log" level="info" additivity="false">
+        <appender-ref ref="AUTH"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="service-log" level="info" additivity="false">
+        <appender-ref ref="SERVICE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- Логи спринга. Используется дефолтный логер -->
+    <logger name="org.springframework"/>
+
+    <!-- Логи хибернэйта. Используется дефолтный логер -->
+    <logger name="org.hibernate"/>
+
+    <!-- Родитель всех логеров -->
+    <root level="info"/>
+
+</configuration>

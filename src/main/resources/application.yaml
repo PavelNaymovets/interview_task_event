@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /event
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/event
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        ddl-auto: none

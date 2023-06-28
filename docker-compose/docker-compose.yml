@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+
+  psvm-postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./imports/db/:/docker-entrypoint-initdb.d/
+    networks:
+      - psvm-net
+
+  psvm-liquibase:
+    container_name: liquibase
+    image: liquibase/liquibase
+    command:
+      - update
+      - --url=jdbc:postgresql://psvm-postgres:5432/event?user=postgres&password=postgres
+      - --changeLogFile=changelog.xml
+    volumes:
+      - ./liquibase/config/changelog.xml:/liquibase/changelog.xml
+      - ./liquibase/scripts:/liquibase/scripts
+    networks:
+      - psvm-net
+    depends_on:
+      - psvm-postgres
+
+networks:
+  psvm-net:
