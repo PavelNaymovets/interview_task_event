@@ -13,4 +13,5 @@
 ### Пояснения
 * Запуск базы данных и системы миграции осуществляется через _[docker-compose](https://github.com/PavelNaymovets/interview_task_event/blob/master/docker-compose/docker-compose.yml)_ файл
 * База данных PostgreSQL разворачивается в docker контейнере
-* Миграция базы данных происходит через docker контэйнер liquibase. Скрипты _[тут](https://github.com/PavelNaymovets/interview_task_event/tree/master/docker-compose/liquibase/scripts)_.
+* Миграция базы данных происходит через docker контэйнер liquibase. Скрипты _[тут](https://github.com/PavelNaymovets/interview_task_event/tree/master/docker-compose/liquibase/scripts)_
+* Если понадобиться доступ к коллекции в postman - пишите, предоставлю
